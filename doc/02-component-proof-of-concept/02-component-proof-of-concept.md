@@ -106,7 +106,7 @@ Below is further rationale/explanation for the rubric items above:
 > to create a new design. In you do end up picking one at random, you should
 > disclose that here as well.
 
-<!-- TODO: briefly argue your choice of design or design something
+<!-- briefly argue your choice of design or design something
 new; then delete this comment -->
 I'm choosing to take my "MusicPlayer" concept for a test drive. First of all,
 it is the most fleshed out and feasible of all my designs. I think it also has
