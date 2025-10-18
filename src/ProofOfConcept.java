@@ -11,11 +11,26 @@ class ProofOfConcept {
         SimpleReader in = new SimpleReader1L();
         MusicPlayer myPlaylist = new MusicPlayer();
 
+        // Showcase adding songs:
         myPlaylist.addSong("Dogs", "Pink Floyd");
         myPlaylist.addSong("Pigs (Three Different Ones)", "Pink Floyd");
         myPlaylist.addSong("Sheep", "Pink Floyd");
         myPlaylist.addSong("crossing field", "LiSA");
 
+        // Showcase skipping
+        out.println("Current Song: " + myPlaylist.currentSongToString());
+        myPlaylist.seekForward();
+        out.println("Current Song: " + myPlaylist.currentSongToString());
+
+        // Showcase loop from front to back
+        myPlaylist.seekBackward();
+        myPlaylist.seekBackward();
+        out.println("Current Song: " + myPlaylist.currentSongToString());
+
+        // Showcase removing songs and looping back to front:
+        myPlaylist.removeSong("Dogs", "Pink Floyd");
+        out.println("Current Song: " + myPlaylist.currentSongToString());
+        myPlaylist.seekForward();
         out.println("Current Song: " + myPlaylist.currentSongToString());
     }
 
@@ -45,6 +60,15 @@ class ProofOfConcept {
 
                 return returnString;
             }
+
+            public final boolean equals(Song song2) {
+                boolean returnValue = false;
+                if (this.title == song2.title && this.artist == song2.artist) {
+                    returnValue = true;
+                }
+
+                return returnValue;
+            }
         }
 
         // Representation:
@@ -60,13 +84,9 @@ class ProofOfConcept {
         /**
          * No-argument constructor.
          */
-        public MusicPlayer() {
+        MusicPlayer() {
             this.createNewRep();
         }
-
-        /*
-         * Standard Methods.
-         */
 
         /**
          *
@@ -84,35 +104,38 @@ class ProofOfConcept {
         public final void removeSong(String title, String artist) {
             Song currSong = this.songList.entry(0);
             Song searchSong = new Song(title, artist);
-            int index = 1;
+            int index = 0;
             while (!currSong.equals(searchSong)) {
                 currSong = this.songList.entry(index);
                 index++;
             }
-
+            this.songList.remove(index);
             if (index < this.currentSongIndex) {
                 this.currentSongIndex--;
             }
         }
 
-        /**
-         * Standard Methods.
-         */
-        public final void seekForward(String title, String artist) {
+        public final void seekForward() {
             this.currentSongIndex++;
+            if (this.currentSongIndex >= this.songList.length()) {
+                this.currentSongIndex = 0;
+            }
         }
 
         /**
-         * Standard Methods.
+         *
          */
-        public final void seekBackward(String title, String artist) {
-            if (this.currentSongIndex > 0) {
-                this.currentSongIndex--;
-            } else {
+        public final void seekBackward() {
+            this.currentSongIndex--;
+            if (this.currentSongIndex < 0) {
                 this.currentSongIndex = this.songList.length() - 1;
             }
         }
 
+        /**
+         *
+         * @return
+         */
         public final String currentSongToString() {
             return this.songList.entry(this.currentSongIndex).toString();
         }
